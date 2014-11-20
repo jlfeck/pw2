@@ -2,9 +2,6 @@
 
 include('config/config.php');
 
-/**
-* 
-*/
 class User extends Connection
 {
     private $id;
@@ -66,7 +63,24 @@ class User extends Connection
 
 
         } catch (Exception $error_load) {
-            echo "Usuário não cadastrado ".$error_load->getMessage();
+            echo "Usuário não foi cadastrado ".$error_load->getMessage();
+        }
+    }
+
+    public function harUser($user) {
+
+        $sql = 'SELECT * FROM users WHERE user = ?';
+
+        try {
+
+            $has_user = Connection::prepare($sql);
+            $has_user->bindParam(1, $user);
+            $result = $has_user->execute();
+            
+            return $result;
+
+        } catch (Exception $error_load) {
+            echo "Erro ao selecionar dados ".$error_load->getMessage();
         }
     }
 
@@ -76,41 +90,69 @@ class User extends Connection
         $sql.= 'VALUES (:user,:pass,:name,:email)';
 
         try {
-            $insert_user = Connection::prepare($sql);
-            $insert_user->bindValue(':user', $this->getUser(), PDO::PARAM_STR);
-            $insert_user->bindValue(':pass', $this->getPass(), PDO::PARAM_STR);
-            $insert_user->bindValue(':name', $this->getName(), PDO::PARAM_STR);
-            $insert_user->bindValue(':email', $this->getEmail(), PDO::PARAM_STR);
-            $insert_user->execute();
-        
+
+            if ($this->harUser($this->getName())) {
+                
+                $msg = 'Usuário já cadastrado';
+                return $msg;
+
+            } else {                
+                $insert_user = Connection::prepare($sql);
+                $insert_user->bindValue(':user', $this->getUser(), PDO::PARAM_STR);
+                $insert_user->bindValue(':pass', $this->getPass(), PDO::PARAM_STR);
+                $insert_user->bindValue(':name', $this->getName(), PDO::PARAM_STR);
+                $insert_user->bindValue(':email', $this->getEmail(), PDO::PARAM_STR);
+                $insert_user->execute();
+                
+                return true;
+            }
+
+
         } catch (PDOException $error_insert) {
             echo 'Erro ao cadastrar um novo usuário ' . $error_insert->getMessage();
         }
     }
 
-    // public function loadUser($id) {
+    public function loadUser($id) {
 
-    //     $sql = 'SELECT * FROM users WHERE id = ?';
+        $sql = 'SELECT * FROM users WHERE id = ?';
 
-    //     try {
+        try {
 
-    //         $load_user = Connection::prepare($sql);
-    //         $load_user->bindParam(1, $id);
-    //         $load_user->execute();
+            $load_user = Connection::prepare($sql);
+            $load_user->bindParam(1, $id);
+            $load_user->execute();
+
+            $result = $load_user->fetch(PDO::FETCH_OBJ);
+
+            return $result;
             
-    //     } catch (Exception $error_load) {
-    //         echo "Erro ao selecionar dados ".$error_load->getMessage();
-    //     }
+        } catch (Exception $error_load) {
+            echo "Erro ao selecionar dados ".$error_load->getMessage();
+        }
 
-    //     $result = $load_user->fetch(PDO::FETCH_OBJ);
 
-    //     $this->setId($id);
-    //     $this->setUser($result->user);
-    //     $this->setPass($result->pass);
-    //     $this->setName($result->name);
-    //     $this->setEmail($result->email);
+    }
 
-    // }
+    public function updateUser($id) {
+        $sql = 'UPDATE  users SET  user = :user, pass = :pass, name = :name, email = :email WHERE  id = :id';
+        try {
+
+            $update_user = Connection::prepare($sql);
+            $update_user->bindValue(':user', $this->getUser());
+            $update_user->bindValue(':pass', $this->getPass());
+            $update_user->bindValue(':name', $this->getName());
+            $update_user->bindValue(':email', $this->getEmail());
+            $update_user->bindParam(':id', $id);
+            $update_user->execute();
+
+            // echo "Usuário atualizado com sucesso";
+            return true;
+
+        } catch (Exception $error_update) {
+            echo "Erro ao atualizar usuário ".$error_update->getMessage();
+        }
+    }
     
 }
 

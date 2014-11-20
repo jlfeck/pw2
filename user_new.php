@@ -1,5 +1,5 @@
+<?php include('header.php'); ?>
 <?php
-
 include('src/User.php');
 
 if (!empty($_POST)) {
@@ -17,8 +17,37 @@ if (!empty($_POST)) {
 	$User->setName($name);
 	$User->setEmail($email);
 
-	$User->insertUser();
-
-	header("Location: index.php");
-
+	$result = $User->insertUser();
+	$_SESSION['msg'] = $result;
 }
+?>
+<?php if (!Session::isLogged()): ?>
+<div class="offset-4 col-4 offset-mobile-2 col-mobile-8">
+<!-- user -->
+	<?php
+		if (!empty($_SESSION["msg"])) {
+			$msg = $_SESSION['msg'];
+			echo '<div class="alert">'.$msg.'</div>';
+			unset($_SESSION['msg']);
+		}
+	?>
+<div class="form-header">Usuário</div>
+<form method="POST" action="user_new.php">
+  <input class="form-pw" type="text" name="name" placeholder="Nome">
+  <input class="form-pw" type="text" name="user" placeholder="usuário">
+  <input class="form-pw" type="password" name="pass" placeholder="senha">
+  <input class="form-pw" type="text" name="email" placeholder="E-mail">
+  <button class="btn btn-sucess" type="submit">Cadastrar</button>
+</form>
+
+</div>
+<?php else: ?>
+
+	<div class="col-12">
+		<div class="alert-login">Você já está logado</div>
+	</div>
+
+<?php
+endif; 
+include('footer.php'); 
+?>

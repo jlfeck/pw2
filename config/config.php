@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class Connection extends PDO 
 {
 	private $dsn = 'mysql:dbname=pw2;host=162.243.116.71;charset=utf8';

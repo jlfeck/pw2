@@ -1,5 +1,4 @@
 <?php
-
 include('src/Post.php');
 
 if (!empty($_POST)) {
@@ -18,5 +17,31 @@ if (!empty($_POST)) {
 	$Post->insertPost();
 
 	header("Location: index.php");
-
 }
+?>
+<?php include('header.php'); ?>
+<?php if (Session::isLogged()): ?>
+<div class="offset-2 col-8">
+<!-- post -->
+  
+  <div class="form-header">Post</div>
+  <form method="POST" action="post_new.php">
+    <input class="form-pw" type="text" name="title" placeholder="Título">
+    <textarea class="form-pw" name="content" placeholder="Conteúdo" rows="5"></textarea>
+    <input type="hidden" name="id_user" value="<?php echo $_SESSION['currentId']; ?>">
+    <button class="btn btn-sucess" type="submit">Postar</button>
+  </form>
+
+</div>
+
+<?php else: ?>
+
+	<div class="col-12">
+		<div class="alert-login">Você precisa estar logado para postar</div>
+	</div>
+
+<?php
+endif;
+
+include('footer.php');
+?>
