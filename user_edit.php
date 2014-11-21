@@ -56,6 +56,7 @@ if (!empty($_POST)) {
   <input class="form-pw" type="password" name="pass" placeholder="senha" value="<?php echo $result->pass; ?>">
   <input class="form-pw" type="text" name="email" placeholder="E-mail" value="<?php echo $result->email; ?>">
   <button class="btn btn-sucess" type="submit">Salvar</button>
+  <a href="user_delete.php?id=<?php echo $id_user; ?>" class="btn btn-danger push-right" type="submit">Remover usuário</a>
 </form>
 <?php else: ?>
 

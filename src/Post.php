@@ -38,6 +38,28 @@ class Post extends Connection
         $this->content = $content;
     }
 
+    public function hasPost($id_user) {
+
+        $sql = 'SELECT * FROM posts WHERE id_user = ?';
+
+        try {
+
+            $hasPost = Connection::prepare($sql);
+            $hasPost->bindParam(1, $id_user);
+            $hasPost->execute();
+            $result = !$hasPost->fetchColumn() ? false : true;
+            
+            return $result;
+
+        } catch (Exception $error_has) {
+            $data = array(
+                'msg' => 'Erro ao selecionar dados '.$error_has->getMessage()
+            );
+
+            return $data;
+        }
+    }
+
     public function insertPost() {
 
         $sql = 'INSERT INTO posts (id_user, title, content) ';
