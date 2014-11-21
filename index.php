@@ -27,7 +27,7 @@ include('src/Post.php');
         <div class="post">
           <ul class="nav-post">
             <li><a class="btn-default" href="post_edit.php?id=<?php echo $post->id; ?>"><span class="icon icon-edit"></span></a></li>
-            <li><a class="btn-danger" href="#"><span class="icon icon-delete"></span></a></li>
+            <li><a class="btn-danger" href="post_delete.php?id=<?php echo $post->id; ?>"><span class="icon icon-delete"></span></a></li>
           </ul>
           <h2 class="title-pw"><?php echo $post->title; ?></h2>
           <p><?php echo $_SESSION['currentName']; ?></p>
