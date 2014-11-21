@@ -1,6 +1,6 @@
 <?php
 
-include('config/config.php');
+include_once('config/config.php');
 
 class User extends Connection
 {
@@ -159,8 +159,6 @@ class User extends Connection
 
             return $data;
         }
-
-
     }
 
     public function updateUser($id) {

@@ -1,6 +1,6 @@
 <?php
 
-include('config/config.php');
+include_once('config/config.php');
 
 class Post extends Connection
 {
@@ -55,6 +55,57 @@ class Post extends Connection
         }
     }
 
+    public function updatePost($id) {
+        $sql = 'UPDATE posts SET title = :title, content = :content WHERE  id = :id';
+        try {
+
+                $update_post = Connection::prepare($sql);
+                $update_post->bindValue(':title', $this->getTitle(), PDO::PARAM_STR);
+                $update_post->bindValue(':content', $this->getContent(), PDO::PARAM_STR);
+                $update_post->bindParam(':id', $id);
+                $update_post->execute();
+
+                $data = array(
+                    'msg' => 'Post atualizado com sucesso',
+                    'route' => 'post_edit.php?id=',
+                    'error' => false
+                );
+
+                return $data;
+
+        } catch (Exception $error_update) {
+            $data = array(
+                'msg' => 'Erro ao atualizar post '.$error_update->getMessage(),
+                'error' => true
+            );
+
+            return $data;
+        }
+    }
+
+    public function loadPost($id) {
+
+        $sql = 'SELECT * FROM posts WHERE id = ?';
+
+        try {
+
+            $load_user = Connection::prepare($sql);
+            $load_user->bindParam(1, $id);
+            $load_user->execute();
+
+            $result = $load_user->fetch(PDO::FETCH_OBJ);
+
+            return $result;
+            
+        } catch (Exception $error_load) {
+            $data = array(
+                'msg' => 'Erro ao selecionar dados '.$error_load->getMessage()
+            );
+
+            return $data;
+        }
+    }
+
     public function listPostsByUser($id_user) {
 
         $sql = 'SELECT * FROM posts WHERE id_user = :id_user';
@@ -82,7 +133,7 @@ class Post extends Connection
             $list_posts = Connection::prepare($sql);
             $list_posts->execute();
             
-            $result = $list_posts_user->fetchAll(PDO::FETCH_OBJ);
+            $result = $list_posts->fetchAll(PDO::FETCH_OBJ);
             
             return $result;
             
