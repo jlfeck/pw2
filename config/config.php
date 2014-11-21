@@ -24,5 +24,3 @@ function __destruct( ) {
 	$this->handle = NULL;
 	}
 }
-
-?>

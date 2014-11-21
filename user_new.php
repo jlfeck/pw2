@@ -1,5 +1,5 @@
-<?php include('header.php'); ?>
 <?php
+session_start();
 include('src/User.php');
 
 if (!empty($_POST)) {
@@ -18,10 +18,18 @@ if (!empty($_POST)) {
 	$User->setEmail($email);
 
 	$result = $User->insertUser();
-	$_SESSION['msg'] = $result;
+	$_SESSION['msg'] = $result['msg'];
+
+	header("Location: " . $result['route']);
+	exit;
 }
 ?>
-<?php if (!Session::isLogged()): ?>
+<?php 
+include('header.php');
+
+	if (!Session::isLogged()): 
+
+?>
 <div class="offset-4 col-4 offset-mobile-2 col-mobile-8">
 <!-- user -->
 	<?php

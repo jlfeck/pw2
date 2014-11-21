@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('src/User.php');
 
 $User = new User();
@@ -22,11 +23,19 @@ if (!empty($_POST)) {
 	$User->setPass($pass);
 	$User->setName($name);
 	$User->setEmail($email);
+	$result = $User->updateUser($id);
 
-	$User->updateUser($id);
+	if (!$result['error']) {
+		$_SESSION['currentUser'] = $user;
+		$_SESSION['currentName'] = $name;
+	}
 
-	header("Location: user_edit.php?id=".$id);
+	$_SESSION['msg'] = $result['msg'];
+
+	header("Location: ". $result['route'].$id );
+	exit;
 }
+
 ?>
 <?php include('header.php'); ?>
 <div class="offset-4 col-4 offset-mobile-2 col-mobile-8">
@@ -38,6 +47,7 @@ if (!empty($_POST)) {
 			unset($_SESSION['msg']);
 		}
 	?>
+<?php if($_GET['id'] == $_SESSION['currentId']): ?>
 <div class="form-header">Usuário</div>
 <form method="POST" action="user_edit.php">
   <input type="hidden" name="id" value="<?php echo $id_user; ?>">
@@ -47,7 +57,13 @@ if (!empty($_POST)) {
   <input class="form-pw" type="text" name="email" placeholder="E-mail" value="<?php echo $result->email; ?>">
   <button class="btn btn-sucess" type="submit">Salvar</button>
 </form>
+<?php else: ?>
 
+	<div class="col-12">
+		<div class="alert-login">Você não tem permissão para editar este usuário</div>
+	</div>
+
+<?php endif; ?>
 </div>
 
 <?php include('footer.php'); ?>

@@ -22,7 +22,7 @@ if (!empty($_POST)) {
 
 
 	} else {
-		$msg = 'Usuário ou senha inválidos';
+		$_SESSION['msg'] = 'Usuário ou senha inválidos';
 		header("Location: login.php");
 	}
 }

@@ -2,9 +2,13 @@
 	<!-- login -->
 	<div class="offset-4 col-4 offset-mobile-2 col-mobile-8 login">
 
-		<div class="msg">
-			<?php echo $msg; ?>
-		</div>
+		<?php
+			if (!empty($_SESSION["msg"])) {
+				$msg = $_SESSION['msg'];
+				echo '<div class="alert">'.$msg.'</div>';
+				unset($_SESSION['msg']);
+			}
+		?>
 
 	  <div class="form-header">Logar</div>
 	  <form method="POST" action="authenticate.php">

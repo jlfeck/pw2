@@ -2,9 +2,6 @@
 
 include('config/config.php');
 
-/**
-* 
-*/
 class Post extends Connection
 {
     private $id;
@@ -56,6 +53,43 @@ class Post extends Connection
         } catch (PDOException $error_insert) {
             echo 'Erro ao cadastrar um novo post ' . $error_insert->getMessage();
         }
+    }
+
+    public function listPostsByUser($id_user) {
+
+        $sql = 'SELECT * FROM posts WHERE id_user = :id_user';
+        
+        try {
+            $list_posts_user = Connection::prepare($sql);
+            $list_posts_user->bindParam(':id_user', $id_user);
+            $list_posts_user->execute();
+            
+            $result = $list_posts_user->fetchAll(PDO::FETCH_OBJ);
+            
+            return $result;
+            
+        } catch (Exception $error_list) {
+            return array('msg' => 'Erro ao selecionar dados '.$error_list->getMessage());
+        }
+
+    }
+
+    public function listAllPosts() {
+
+        $sql = 'SELECT * FROM posts';
+        
+        try {
+            $list_posts = Connection::prepare($sql);
+            $list_posts->execute();
+            
+            $result = $list_posts_user->fetchAll(PDO::FETCH_OBJ);
+            
+            return $result;
+            
+        } catch (Exception $error_list) {
+            return array('msg' => 'Erro ao selecionar dados '.$error_list->getMessage());
+        }
+
     }
 
 }

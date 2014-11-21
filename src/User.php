@@ -62,25 +62,34 @@ class User extends Connection
             return $result;
 
 
-        } catch (Exception $error_load) {
-            echo "Usuário não foi cadastrado ".$error_load->getMessage();
+        } catch (Exception $error_check) {
+            $data = array(
+                'msg' => 'Usuário não cadastrado '.$error_check->getMessage()
+            );
+
+            return $data;
         }
     }
 
-    public function harUser($user) {
+    public function hasUser($user) {
 
         $sql = 'SELECT * FROM users WHERE user = ?';
 
         try {
 
-            $has_user = Connection::prepare($sql);
-            $has_user->bindParam(1, $user);
-            $result = $has_user->execute();
+            $hasUser = Connection::prepare($sql);
+            $hasUser->bindParam(1, $user);
+            $hasUser->execute();
+            $result = !$hasUser->fetchColumn() ? false : true;
             
             return $result;
 
-        } catch (Exception $error_load) {
-            echo "Erro ao selecionar dados ".$error_load->getMessage();
+        } catch (Exception $error_has) {
+            $data = array(
+                'msg' => 'Erro ao selecionar dados '.$error_has->getMessage()
+            );
+
+            return $data;
         }
     }
 
@@ -91,12 +100,17 @@ class User extends Connection
 
         try {
 
-            if ($this->harUser($this->getName())) {
+            if ($this->hasUser($this->getUser())) {
                 
-                $msg = 'Usuário já cadastrado';
-                return $msg;
+                $data = array(
+                    'msg' => 'Usuário já cadastrado',
+                    'route' => 'user_new.php'
+                );
+                
+                return $data;
 
             } else {                
+                
                 $insert_user = Connection::prepare($sql);
                 $insert_user->bindValue(':user', $this->getUser(), PDO::PARAM_STR);
                 $insert_user->bindValue(':pass', $this->getPass(), PDO::PARAM_STR);
@@ -104,12 +118,23 @@ class User extends Connection
                 $insert_user->bindValue(':email', $this->getEmail(), PDO::PARAM_STR);
                 $insert_user->execute();
                 
-                return true;
+
+                $data = array(
+                    'msg' => 'Usuário inserido com sucesso',
+                    'route' => 'login.php'
+                );
+                
+                return $data;
+
             }
 
 
         } catch (PDOException $error_insert) {
-            echo 'Erro ao cadastrar um novo usuário ' . $error_insert->getMessage();
+            $data = array(
+                'msg' => 'Erro ao cadastrar um novo usuário ' . $error_insert->getMessage()
+            );
+
+            return $data;
         }
     }
 
@@ -128,7 +153,11 @@ class User extends Connection
             return $result;
             
         } catch (Exception $error_load) {
-            echo "Erro ao selecionar dados ".$error_load->getMessage();
+            $data = array(
+                'msg' => 'Erro ao selecionar dados '.$error_load->getMessage()
+            );
+
+            return $data;
         }
 
 
@@ -138,19 +167,29 @@ class User extends Connection
         $sql = 'UPDATE  users SET  user = :user, pass = :pass, name = :name, email = :email WHERE  id = :id';
         try {
 
-            $update_user = Connection::prepare($sql);
-            $update_user->bindValue(':user', $this->getUser());
-            $update_user->bindValue(':pass', $this->getPass());
-            $update_user->bindValue(':name', $this->getName());
-            $update_user->bindValue(':email', $this->getEmail());
-            $update_user->bindParam(':id', $id);
-            $update_user->execute();
+                $update_user = Connection::prepare($sql);
+                $update_user->bindValue(':user', $this->getUser(), PDO::PARAM_STR);
+                $update_user->bindValue(':pass', $this->getPass(), PDO::PARAM_STR);
+                $update_user->bindValue(':name', $this->getName(), PDO::PARAM_STR);
+                $update_user->bindValue(':email', $this->getEmail(), PDO::PARAM_STR);
+                $update_user->bindParam(':id', $id);
+                $update_user->execute();
 
-            // echo "Usuário atualizado com sucesso";
-            return true;
+                $data = array(
+                    'msg' => 'Usuário atualizado com sucesso',
+                    'route' => 'user_edit.php?id=',
+                    'error' => false
+                );
+
+                return $data;
 
         } catch (Exception $error_update) {
-            echo "Erro ao atualizar usuário ".$error_update->getMessage();
+            $data = array(
+                'msg' => 'Erro ao atualizar usuário '.$error_update->getMessage(),
+                'error' => true
+            );
+
+            return $data;
         }
     }
     
