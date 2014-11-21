@@ -22,7 +22,7 @@
     			<nav class="nav">
     				<ul>
     				  <li><a href="index.php">Página inicial</a></li>
-    				  <?php if(!Session::isLogged()): ?>
+    				  <?php if(!isset($_SESSION) and !Session::isLogged()): ?>
     					  <li><a href="login.php">Entrar</a></li>
     				  <?php else: ?>
     					  <li><a href="post_new.php">Postar</a></li>
