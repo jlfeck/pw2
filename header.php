@@ -22,12 +22,16 @@
     			<nav class="nav">
     				<ul>
     				  <li><a href="index.php">Página inicial</a></li>
-    				  <?php if(isset($_SESSION) and !Session::isLogged()): ?>
+    				  <?php if(!Session::isLogged()): ?>
     					  <li><a href="login.php">Entrar</a></li>
     				  <?php else: ?>
     					  <li><a href="post_new.php">Postar</a></li>
 
-    					  <?php echo '<li><a href="user_edit.php?id='.$_SESSION['currentId'].'">'.$_SESSION['currentUser'].'</a></li>'; ?>
+    					  <?php 
+                          if (isset($_SESSION['currentId']) and isset($_SESSION['currentUser'])) {
+                            echo '<li><a href="user_edit.php?id='.$_SESSION['currentId'].'">'.$_SESSION['currentUser'].'</a></li>'; 
+                          }
+                          ?>
 
     					  <li><a href="logout.php">Sair</a></li>
     				  <?php endif; ?>
