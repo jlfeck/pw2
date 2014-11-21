@@ -105,6 +105,32 @@ class Post extends Connection
         }
     }
 
+    public function deletePost($id) {
+        $sql = 'DELETE FROM posts WHERE id = :id';
+        try {
+            $delete_post = Connection::prepare($sql);
+            $delete_post->bindValue(":id", $id);
+            $delete_post->execute();
+
+            $data = array(
+                'msg' => 'Post deletado com sucesso',
+                'route' => 'index.php',
+                'error' => false
+            );
+
+            return $data;
+
+
+        } catch (Exception $error_delete) {
+            $data = array(
+                'msg' => 'Erro ao deletar o post '.$error_update->getMessage(),
+                'error' => true
+            );
+
+            return $data;
+        }
+    }
+
     public function loadPost($id) {
 
         $sql = 'SELECT * FROM posts WHERE id = ?';

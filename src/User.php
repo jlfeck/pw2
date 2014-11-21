@@ -190,6 +190,32 @@ class User extends Connection
             return $data;
         }
     }
+
+    public function deleteUser($id) {
+        $sql = 'DELETE FROM users WHERE id = :id';
+        try {
+            $delete_user = Connection::prepare($sql);
+            $delete_user->bindValue(":id", $id);
+            $delete_user->execute();
+
+            $data = array(
+                'msg' => 'Usuário deletado com sucesso',
+                'route' => 'login.php',
+                'error' => false
+            );
+
+            return $data;
+
+
+        } catch (Exception $error_delete) {
+            $data = array(
+                'msg' => 'Erro ao deletar usuário '.$error_update->getMessage(),
+                'error' => true
+            );
+
+            return $data;
+        }
+    }
     
 }
 

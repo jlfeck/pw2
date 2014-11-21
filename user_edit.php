@@ -47,7 +47,7 @@ if (!empty($_POST)) {
 			unset($_SESSION['msg']);
 		}
 	?>
-<?php if($_GET['id'] == $_SESSION['currentId']): ?>
+<?php if(!empty($_GET['id']) and $_GET['id'] == $_SESSION['currentId']): ?>
 <div class="form-header">Usuário</div>
 <form method="POST" action="user_edit.php">
   <input type="hidden" name="id" value="<?php echo $id_user; ?>">

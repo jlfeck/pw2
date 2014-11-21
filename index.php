@@ -6,7 +6,13 @@ include('src/Post.php');
 
   <!-- Feed -->
   <div class="col-12 feed">
-      <?php 
+      <?php
+  
+      if (!empty($_SESSION["msg"])) {
+        $msg = $_SESSION['msg'];
+        echo '<div class="alert">'.$msg.'</div>';
+        unset($_SESSION['msg']);
+      }
 
       if(Session::isLogged()): 
 
@@ -27,7 +33,7 @@ include('src/Post.php');
         <div class="post">
           <ul class="nav-post">
             <li><a class="btn-default" href="post_edit.php?id=<?php echo $post->id; ?>"><span class="icon icon-edit"></span></a></li>
-            <li><a class="btn-danger" href="post_delete.php?id=<?php echo $post->id; ?>"><span class="icon icon-delete"></span></a></li>
+            <li><a class="btn-danger" href="post_delete.php?id=<?php echo $post->id; ?>&id_user=<?php echo $post->id_user; ?>"><span class="icon icon-delete"></span></a></li>
           </ul>
           <h2 class="title-pw"><?php echo $post->title; ?></h2>
           <p><?php echo $_SESSION['currentName']; ?></p>

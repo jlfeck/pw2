@@ -22,7 +22,6 @@ class Session
 
 	public static function logout()
 	{	
-		// $_SESSION['userCurrent'] = null;
 		session_unset();
 		session_destroy();
 		header("Location: index.php");
