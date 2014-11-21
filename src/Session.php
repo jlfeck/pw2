@@ -17,7 +17,7 @@ class Session
 
 	public static function isLogged()
 	{
-		return ($_SESSION['currentUser']) ? true : false ;
+		return (isset($_SESSION['currentUser'])) ? true : false ;
 	}
 
 	public static function logout()
