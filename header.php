@@ -28,11 +28,12 @@
     					  <li><a href="post_new.php">Postar</a></li>
 
     					  <?php 
-                          if (isset($_SESSION['currentId']) and isset($_SESSION['currentUser'])) {
-                            echo '<li><a href="user_edit.php?id='.$_SESSION['currentId'].'">'.$_SESSION['currentUser'].'</a></li>'; 
-                          } else {
-                            $_SESSION = null;
-                          }
+
+                          $current_user = (isset($_SESSION['currentUser'])) ? $_SESSION['currentUser'] : '' ;
+                          $current_id = (isset($_SESSION['currentId'])) ? $_SESSION['currentId'] : '' ;
+                          
+                          echo '<li><a href="user_edit.php?id='.$current_id.'">'.$current_user.'</a></li>'; 
+                          
                           ?>
 
     					  <li><a href="logout.php">Sair</a></li>
