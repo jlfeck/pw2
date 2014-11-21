@@ -30,6 +30,8 @@
     					  <?php 
                           if (isset($_SESSION['currentId']) and isset($_SESSION['currentUser'])) {
                             echo '<li><a href="user_edit.php?id='.$_SESSION['currentId'].'">'.$_SESSION['currentUser'].'</a></li>'; 
+                          } else {
+                            $_SESSION = null;
                           }
                           ?>
 
