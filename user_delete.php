@@ -1,5 +1,5 @@
 <?php
-session_start();
+@session_start();
 include('src/User.php');
 include('src/Post.php');
 

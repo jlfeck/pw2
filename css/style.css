@@ -128,6 +128,11 @@ a, a:hover {
 	height: 50px;
 }
 
+form label.error {
+	font-size: 12px;
+	color: #ff7c53;
+}
+
 .form-header {
 	border-bottom: 1px solid #ccc;
 	margin-bottom: 10px;
@@ -155,7 +160,7 @@ a, a:hover {
 	width: 100%;
 	height: 40px;
 	padding: 6px 12px;
-	margin-bottom: 15px;
+	margin-top: 15px;
 	font-size: 16px;
 	border: 1px solid #ccc;
 }
@@ -178,6 +183,7 @@ textarea.form-pw {
 
 .login a {
 	padding: 10px 0px;
+	margin-top: 15px;
 	color: #000;
 	text-decoration: none;
 }
@@ -190,6 +196,7 @@ textarea.form-pw {
 .btn {
 	height: 40px;
 	padding: 6px 12px;
+	margin-top: 15px;
 	font-size: 16px;
 	vertical-align: middle;
 	border: 1px solid transparent;
@@ -326,9 +333,9 @@ textarea.form-pw {
 
 .post .content {
 	text-align: justify;
-	padding-bottom: 10px;
 	text-justify: inter-word;
-
+	padding-bottom: 10px;
+	word-wrap: break-word
 }
 
 

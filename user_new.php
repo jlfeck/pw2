@@ -1,5 +1,5 @@
 <?php
-session_start();
+@session_start();
 include('src/User.php');
 
 if (!empty($_POST)) {
@@ -40,12 +40,12 @@ include('header.php');
 		}
 	?>
 <div class="form-header">Usuário</div>
-<form method="POST" action="user_new.php">
+<form class="user" method="POST" action="user_new.php">
   <input class="form-pw" type="text" name="name" placeholder="Nome">
   <input class="form-pw" type="text" name="user" placeholder="usuário">
   <input class="form-pw" type="password" name="pass" placeholder="senha">
   <input class="form-pw" type="text" name="email" placeholder="E-mail">
-  <button class="btn btn-sucess" type="submit">Cadastrar</button>
+  <button class="btn btn-sucess push-left" type="submit">Cadastrar</button>
 </form>
 
 </div>

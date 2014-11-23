@@ -1,5 +1,5 @@
 <?php
-session_start();
+@session_start();
 include('src/Post.php');
 
 $Post = new Post();
@@ -41,7 +41,7 @@ if (!empty($_POST)) {
 ?>
 <?php if ($result->id_user == $_SESSION['currentId']): ?>
 <div class="form-header">Post</div>
-<form method="POST" action="post_edit.php">
+<form class="post" method="POST" action="post_edit.php">
 	<input type="hidden" name="id" value="<?php echo $id; ?>">
 	<input class="form-pw" type="text" name="title" placeholder="Título" value="<?php echo $result->title; ?>">
 	<textarea class="form-pw" name="content" placeholder="Conteúdo" rows="5" ><?php echo $result->content; ?></textarea>

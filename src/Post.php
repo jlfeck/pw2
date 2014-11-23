@@ -37,7 +37,7 @@ class Post extends Connection
     public function setContent($content) {
         $this->content = $content;
     }
-
+    // verifica se o usuário tem posts criados
     public function hasPost($id_user) {
 
         $sql = 'SELECT * FROM posts WHERE id_user = ?';
@@ -59,7 +59,7 @@ class Post extends Connection
             return $data;
         }
     }
-
+    // insere um post no banco
     public function insertPost() {
 
         $sql = 'INSERT INTO posts (id_user, title, content) ';
@@ -76,7 +76,7 @@ class Post extends Connection
             echo 'Erro ao cadastrar um novo post ' . $error_insert->getMessage();
         }
     }
-
+    // atualiza um post no banco
     public function updatePost($id) {
         $sql = 'UPDATE posts SET title = :title, content = :content WHERE  id = :id';
         try {
@@ -104,7 +104,7 @@ class Post extends Connection
             return $data;
         }
     }
-
+    // deleta um post do banco
     public function deletePost($id) {
         $sql = 'DELETE FROM posts WHERE id = :id';
         try {
@@ -130,7 +130,7 @@ class Post extends Connection
             return $data;
         }
     }
-
+    // retorna um objeto post
     public function loadPost($id) {
 
         $sql = 'SELECT * FROM posts WHERE id = ?';
@@ -153,7 +153,7 @@ class Post extends Connection
             return $data;
         }
     }
-
+    // lista os posts de um determinado usuário
     public function listPostsByUser($id_user) {
 
         $sql = 'SELECT * FROM posts WHERE id_user = :id_user';
@@ -172,7 +172,7 @@ class Post extends Connection
         }
 
     }
-
+    // lista todos os posts
     public function listAllPosts() {
 
         $sql = 'SELECT * FROM posts';

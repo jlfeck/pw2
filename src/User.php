@@ -45,7 +45,7 @@ class User extends Connection
     public function setEmail($email) {
         $this->email = $email;
     }
-
+    // verifica se usuário e senha é valido
     public function checkUser($user, $pass) {
 
         $sql = 'SELECT * FROM users WHERE user = ? AND pass = ?';
@@ -70,7 +70,7 @@ class User extends Connection
             return $data;
         }
     }
-
+    // verifica se o usuário já existe
     public function hasUser($user) {
 
         $sql = 'SELECT * FROM users WHERE user = ?';
@@ -92,7 +92,7 @@ class User extends Connection
             return $data;
         }
     }
-
+    // insere um usuário no banco
     public function insertUser() {
 
         $sql = 'INSERT INTO users (user, pass, name, email) ';
@@ -137,7 +137,7 @@ class User extends Connection
             return $data;
         }
     }
-
+    // retorna um objeto user
     public function loadUser($id) {
 
         $sql = 'SELECT * FROM users WHERE id = ?';
@@ -160,7 +160,7 @@ class User extends Connection
             return $data;
         }
     }
-
+    // atualiza um usuário no banco
     public function updateUser($id) {
         $sql = 'UPDATE  users SET  user = :user, pass = :pass, name = :name, email = :email WHERE  id = :id';
         try {
@@ -190,7 +190,7 @@ class User extends Connection
             return $data;
         }
     }
-
+    // deleta um usuário do banco
     public function deleteUser($id) {
         $sql = 'DELETE FROM users WHERE id = :id';
         try {
@@ -218,150 +218,3 @@ class User extends Connection
     }
     
 }
-
-// class User extends Connection 
-// {
-//     private $id;
-//     private $name;
-//     private $mail;
-//     private $address;
-//     private $state;
-//     private $phone;
-
-//     // Getteres and Setters
-//     public function getId() {
-//         return $this->id;
-//     }
-//     public function setId($id) {
-//         $this->id = $id;
-//     }
-
-//     public function getName() {
-//         return $this->name;
-//     }
-//     public function setName($name) {
-//         $this->name = $name;
-//     }
-
-//     public function getMail() {
-//         return $this->mail;
-//     }
-//     public function setMail($mail) {
-//         $this->mail = $mail;
-//     }
-
-//     public function getAddress() {
-//         return $this->address;
-//     }
-//     public function setAddress($address) {
-//         $this->address = $address;
-//     }
-
-//     public function getState() {
-//         return $this->state;
-//     }
-//     public function setState($state) {
-//         $this->state = $state;
-//     }
-
-//     public function getPhone() {
-//         return $this->phone;
-//     }
-//     public function setPhone($phone) {
-//         $this->phone = $phone;
-//     }
-
-//     public function loadUser($id) {
-
-//         $sql = 'SELECT * FROM user WHERE id = ?';
-
-//         try {
-
-//             $load_user = Connection::prepare($sql);
-//             $load_user->bindParam(1, $id);
-//             $load_user->execute();
-            
-//         } catch (Exception $error_load) {
-//             echo "Erro ao selecionar dados ".$error_load->getMessage();
-//         }
-
-//         $result = $load_user->fetch(PDO::FETCH_OBJ);
-
-//         $this->setId($id);
-//         $this->setName($result->name);
-//         $this->setMail($result->mail);
-//         $this->setAddress($result->address);
-//         $this->setState($result->state);
-//         $this->setPhone($result->phone);
-
-//     }
-
-//     
-//     public function listUser() {
-
-//         $sql = 'SELECT * FROM user ';
-        
-//         try {
-//             $list_user = Connection::prepare($sql);
-//             $list_user->execute();
-            
-//             $result = $list_user->fetchAll(PDO::FETCH_OBJ);
-            
-            
-//         } catch (Exception $error_list) {
-//             echo "Erro ao selecionar dados ".$error_list->getMessage();
-//         }
-
-//         return $result;
-//     }
-
-//     public function updateUser() {
-//         $sql = 'UPDATE  user SET  name = :name, mail = :mail, address = :address, state = :state, phone = :phone WHERE  id = :id';
-//         try {
-
-//             $update_user = Connection::prepare($sql);
-//             $update_user->bindValue(":name", $this->getName());
-//             $update_user->bindValue(":mail", $this->getMail());
-//             $update_user->bindValue(":address", $this->getAddress());
-//             $update_user->bindValue(":state", $this->getState());
-//             $update_user->bindValue(":phone", $this->getPhone());
-//             $update_user->bindValue(":id", $this->getId());
-//             $update_user->execute();
-            
-//         } catch (Exception $error_update) {
-//             echo "Erro ao atualizar usuário ".$error_update->getMessage();
-//         }
-//     }
-
-//     public function deleteUser($id) {
-//         $sql = 'DELETE FROM user WHERE id = :id';
-//         try {
-//             $delete_user = Connection::prepare($sql);
-//             $delete_user->bindValue(":id", $id);
-//             $delete_user->execute();
-
-//         } catch (Exception $error_delete) {
-//             echo "Erro ao atualizar usuário ".$error_delete->getMessage();            
-//         }
-//     }
-
-//     /*
-//     * methods bd
-//     */
-
-//     public function query($sql) {
-        
-//         try {
-//             $list_user = Connection::prepare($sql);
-//             $list_user->execute();
-            
-//             $result = $list_user->fetchAll(PDO::FETCH_OBJ);
-            
-            
-//         } catch (Exception $error_view) {
-//             echo "Erro ao selecionar dados ".$error_view->getMessage();
-//         }
-
-//         return $result;
-//     }
-// }

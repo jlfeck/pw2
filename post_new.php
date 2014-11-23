@@ -25,11 +25,11 @@ if (!empty($_POST)) {
 <!-- post -->
   
   <div class="form-header">Post</div>
-  <form method="POST" action="post_new.php">
+  <form class="post" method="POST" action="post_new.php" id="form">
     <input class="form-pw" type="text" name="title" placeholder="Título">
     <textarea class="form-pw" name="content" placeholder="Conteúdo" rows="5"></textarea>
     <input type="hidden" name="id_user" value="<?php echo $_SESSION['currentId']; ?>">
-    <button class="btn btn-sucess" type="submit">Postar</button>
+    <button class="btn btn-sucess push-left" id="botao" type="submit">Postar</button>
   </form>
 
 </div>

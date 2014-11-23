@@ -1,9 +1,9 @@
 <?php
-session_start();
+@session_start();
 
 class Session
 {
-
+	// cadastra o usuário na sessão
 	public static function start($data = array())
 	{	
 		if (!empty($data)) {
@@ -14,12 +14,12 @@ class Session
 			session_unset();
 		}
 	}
-
+	// verifica se o usuário está logado
 	public static function isLogged()
 	{
 		return (isset($_SESSION['currentUser'])) ? true : false ;
 	}
-
+	// limpa a sessão
 	public static function logout()
 	{	
 		session_unset();

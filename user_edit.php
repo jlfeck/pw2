@@ -1,5 +1,5 @@
 <?php
-session_start();
+@session_start();
 include('src/User.php');
 
 $User = new User();
@@ -49,7 +49,7 @@ if (!empty($_POST)) {
 	?>
 <?php if(!empty($_GET['id']) and $_GET['id'] == $_SESSION['currentId']): ?>
 <div class="form-header">Usuário</div>
-<form method="POST" action="user_edit.php">
+<form class="user" method="POST" action="user_edit.php">
   <input type="hidden" name="id" value="<?php echo $id_user; ?>">
   <input class="form-pw" type="text" name="name" placeholder="Nome" value="<?php echo $result->name; ?>">
   <input class="form-pw" type="text" name="user" placeholder="usuário" value="<?php echo $result->user; ?>">
